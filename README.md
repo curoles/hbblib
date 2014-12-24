@@ -21,8 +21,13 @@ git pull origin master
 Configure and run
 -----------------
 1. Pull HBBLib sources from GitHub (see above [pull source](#pull-source-code-from-github-))
-2. Create build-and-run directory
+2. Create work directory where you want to keep build/synthesis files and from where you are going
+   to run RTL simulation.
    ```
-   mkdir -p hbblib/build
+   mkdir -p hbblib/work
    ```
-3. Create your custom configuration
+3. Create your custom configuration or pick existing one inside /config directory
+4. Change directoty to the work directory and run:
+   ```
+   ruby ../hbblib/configure.rb -c ../hbblib/config/smi.yaml
+   ```
