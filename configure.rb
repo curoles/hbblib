@@ -28,6 +28,7 @@ class Configurator
   #
   def initialize(args)
     make_logger($stdout)
+    @configuration = {}
     @work_dir = Dir.pwd #File.expand_path(File.dirname(__FILE__))
     @options = parse_options(args)
   end
@@ -35,9 +36,15 @@ class Configurator
   # Read config files and generate configuration.
   #
   def run()
-    process_config_files(@options.config_files)
+    if @options.config_files.empty?
+      auto_config
+    else
+      process_config_files(@options.config_files)
+    end
+    dump_configuration(@configuration)
     make_directories
-
+    make_test_script
+    true
   end
 
 private
@@ -76,16 +83,13 @@ private
   def process_config_file(filename)
     log.info("Processing #{filename}")
 
-    configuration = {}
-
     File.open(filename) do |yaml_file|
       YAML.load_stream(yaml_file).each do |yaml|
         #puts yaml
-        configuration.merge!(yaml) #{|key, oldval, newval| return newval}
+        @configuration.merge!(yaml) #{|key, oldval, newval| return newval}
       end
     end
 
-    dump_configuration(configuration)
   end
 
   # Read configuration file template
@@ -153,6 +157,43 @@ private
     File.open(file_path, "w") do |file|
       file.write params.to_yaml
     end
+  end
+
+  def make_test_script
+    script = <<HERE
+#!#{@configuration['installed']['ruby']['path']}
+require_relative '#{@options.src_dir}/test'
+HERE
+    File.open('test.rb', 'w') {|file| file.write(script); file.chmod(0777)}
+  end
+
+  def auto_config
+    require_relative './utils/which'
+    log.warn("Auto configuring...")
+    installed_tools = {}
+    verilog_compilers = []
+    sverilog_compilers = []
+    path = nil
+    if path = which('ruby')
+      log.warn("Found ruby: #{path}")
+      installed_tools.store('ruby', {'path' => path})
+    end
+    path = nil
+    if path = which('gcc')
+      log.warn("Found gcc: #{path}")
+      installed_tools.store('gcc', {'path' => path})
+    end
+    path = nil
+    if path = which('verilator')
+      log.warn("Found verilator: #{path}")
+      installed_tools.store('verilator', {'vlog' => path})
+      verilog_compilers << 'verilator'
+    end
+
+
+    @configuration['installed'] = installed_tools unless installed_tools.empty?
+    @configuration['vcompilers'] = verilog_compilers unless verilog_compilers.empty?
+
   end
 
   # Parse command line options

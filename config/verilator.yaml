@@ -1,0 +1,10 @@
+ruby:
+  path: ruby
+  options: -W2
+
+verilator:
+  vlog   : &verilatorVlog  verilator
+ 
+tool:
+  vlog: *verilatorVlog
+
