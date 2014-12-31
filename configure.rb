@@ -31,6 +31,7 @@ class Configurator
     @configuration = {}
     @work_dir = Dir.pwd #File.expand_path(File.dirname(__FILE__))
     @options = parse_options(args)
+    @configuration.store('source_path', @options.src_dir)
   end
 
   # Read config files and generate configuration.
@@ -192,7 +193,7 @@ HERE
 
 
     @configuration['installed'] = installed_tools unless installed_tools.empty?
-    @configuration['vcompilers'] = verilog_compilers unless verilog_compilers.empty?
+    @configuration['Verilog'] = verilog_compilers unless verilog_compilers.empty?
 
   end
 

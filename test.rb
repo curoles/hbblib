@@ -6,17 +6,83 @@
 
 require 'benchmark'
 require 'yaml'
+require 'logger'
 
 module HBBLib
+
+NAME2LANG = {'v' => 'Verilog', 'sv' => 'SystemVerilog'}
+
+class Tester
+
+  def initialize(name, log, dir, config)
+    @name, @log, @dir, @config = name, log, dir, config
+    @log.progname = name
+  end
+
+  def run
+    @log.info('Begin')
+    tests = File.join(@dir, '*')
+    subdirs = Dir.glob(tests).select {|f| File.directory? f}
+    subdirs.each do |test_dir|
+      dir_name = File.basename(test_dir)
+      @log.info("Processing test directory: #{dir_name}")
+      test_lang(test_dir, dir_name)
+    end
+  end
+
+private
+
+  def test_lang(test_dir, verif_name)
+    verif_lang = NAME2LANG[verif_name]
+    @log.info("#{verif_lang} test")
+
+    if not @config.has_key?(verif_lang) or @config[verif_lang].empty?
+      @log.warn("There are no #{verif_lang} compilers available")
+    else
+      @config[verif_lang].each do |tool_name|
+        work_dir = File.join('.', 'build', @name, verif_name, tool_name)
+        use_tool(tool_name, test_dir, work_dir)
+      end 
+    end
+
+  end
+
+  def use_tool(tool_name, test_dir, work_dir)
+    @log.info("Use #{tool_name}")
+    require_relative tool_path(tool_name)
+    toolClass = HBBLib::Use.const_get(tool_name.capitalize)
+    tool = toolClass.new(@log, test_dir, work_dir, @config)
+    if not tool.build
+      @log.error("Build FAILED")
+      return false
+    end
+    tool.simulate
+  end
+
+  def tool_path(name)
+    File.join('use', name.downcase, name.capitalize)
+  end
+end # class Tester
+
 
 class TestAll
 
   def initialize
     @config = YAML.load(File.read("configuration.yaml"))
+    @log = Logger.new($stdout)
+    @log.datetime_format = '%H:%M:%S'
+    @log.level = Logger::DEBUG
   end
 
   def run
-    puts @config
+    tests = File.join(@config['source_path'], 'test', '*')
+    subdirs = Dir.glob(tests).select {|f| File.directory? f}
+    subdirs.each do |test_dir|
+      dir_name = File.basename(test_dir)
+      @log.info("Processing test directory: #{dir_name}")
+      tester = Tester.new(dir_name, @log, test_dir, @config)
+      tester.run
+    end
   end
 end # class TestAll
 

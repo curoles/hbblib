@@ -8,18 +8,17 @@
 
 // Rising edge triggered D Flip Flop
 //
-module Dff (q, d, clk);
+module Dff
+  #(parameter WIDTH=1) (
+  output [WIDTH-1:0] out,
+  input  [WIDTH-1:0] in,
+  input  [WIDTH-1:0] clk
+);
    
-  parameter WIDTH = 1;
-
-  input  [WIDTH-1:0] d;   // data in
-  input              clk;
-  output [WIDTH-1:0] q;   // data out
-
-  reg  [WIDTH-1:0] q;
+  reg  [WIDTH-1:0] out;
   
   always @(posedge clk)
-      q[WIDTH-1:0] <= d[WIDTH-1:0];
+      out[WIDTH-1:0] <= in[WIDTH-1:0];
 
 endmodule
 
