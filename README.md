@@ -26,8 +26,16 @@ Configure and run
    ```
    mkdir -p hbblib/work
    ```
-3. Create your custom configuration or pick existing one inside /config directory
+3. Create your custom configuration or pick existing one inside /config directory. If no configuration
+   file provided to the configure.rb, then it will automatically collect information about installed tools.
 4. Change directoty to the work directory and run:
    ```
    ruby ../hbblib/configure.rb -c ../hbblib/config/smi.yaml
    ```
+   or
+   ```
+   ruby ../hbblib/configure.rb
+   ```
+
+
+

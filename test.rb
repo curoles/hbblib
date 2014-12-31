@@ -74,8 +74,8 @@ class TestAll
     @log.level = Logger::DEBUG
   end
 
-  def run
-    tests = File.join(@config['source_path'], 'test', '*')
+  def run(test_name = '*')
+    tests = File.join(@config['source_path'], 'test', test_name)
     subdirs = Dir.glob(tests).select {|f| File.directory? f}
     subdirs.each do |test_dir|
       dir_name = File.basename(test_dir)
@@ -92,6 +92,11 @@ def test_all()
 end
 
 module_function
+def test_one(test_name)
+  HBBLib::TestAll.new.run(test_name)
+end
+
+module_function
 def trap_signal_INT(signo)
   Signal.trap(signo, "DEFAULT")
 end
@@ -100,7 +105,6 @@ end # HBBLib
 
 
 def run!
-  puts "Run all tests..."
 
   # Register Ctrl-C handler
   Signal.trap("INT") do |signo|
@@ -109,8 +113,16 @@ def run!
   end
 
   result = false
+  test_fun = lambda {HBBLib.test_all}
 
-  time_report = Benchmark.measure { result = HBBLib.test_all }
+  if not ARGV.empty?
+    puts "Test #{ARGV[0]}"
+    test_fun = lambda {HBBLib.test_one(ARGV[0])}
+  else
+    puts "Run all tests..."
+  end
+
+  time_report = Benchmark.measure { result = test_fun.call }
   puts "Time: #{time_report}"
 
   return result
