@@ -1,0 +1,5 @@
+verilator_test_bench:
+- Dve.v
+verilator_main: ../../../use/verilator/main.cpp
+dut:
+- ../../../hwlib/Mux1hot/model/v/Mux1hot.v

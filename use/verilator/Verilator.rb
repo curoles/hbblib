@@ -26,6 +26,7 @@ class Verilator
     vlog = @config['installed']['verilator']['vlog']
 
     params = "--assert -Wall -cc #{src_files} --exe #{test_bench_main} "
+    params << " --stats" # --coverage"
 
     @log.info "Run #{vlog} #{params}"
     system("#{vlog} #{params}", {:chdir=>@work_dir})

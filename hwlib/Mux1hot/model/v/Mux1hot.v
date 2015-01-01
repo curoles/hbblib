@@ -22,6 +22,8 @@ module Mux1hot
   end
 endmodule
 
+/* verilator lint_off DECLFILENAME */
+
 module Mux1hot3 #(parameter WIDTH=1)
 (
   input  [WIDTH-1:0]   in0,
@@ -32,5 +34,7 @@ module Mux1hot3 #(parameter WIDTH=1)
 );
 
   Mux1hot #(.WIDTH(WIDTH), .INPUTS(3))
-    mux1h3(.in{in2,in1,in0}, .sel(sel), .out(out));
+    mux1h3(.in({in2,in1,in0}), .sel(sel), .out(out));
 endmodule
+
+/* verilator lint_on DECLFILENAME */
