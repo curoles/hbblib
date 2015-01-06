@@ -8,6 +8,9 @@
 % questa[:home] = "#{questa[:base]}/#{questa[:ver]}/questasim"
 % questa[:bin] = "#{questa[:home]}/linux_x86_64"
 
+% cadnrc = {ver: '14.10', base: '/tools/cadence/RC'}
+% cadnrc[:home] = "#{cadnrc[:base]}/RC#{cadnrc[:ver]}"
+% cadnrc[:bin] = "#{cadnrc[:home]}/bin/rc"
 
 installed:
   ruby:
@@ -25,21 +28,20 @@ installed:
     vsim   : &questaVsim  <%=questa[:bin]%>/vsim
     vlib   : &questaVlib  <%=questa[:bin]%>/vlib
     vopt   : &questaVopt  <%=questa[:bin]%>/vopt
-    license: '1717@sv1.smi.local:1717@sv3.smi.local:1717@sv4.smi.local:1717@login1.smi.local:1717@sge1.smi.local'
+    license: >
+      1717@sv13.smi.local:1717@sv7.smi.local:1717@sv6.smi.local:1717@sv5.smi.local:1717@sv20.smi.local:
+      1717@sv15.smi.local:1717@sv21.smi.local:1717@sv24.smi.local:1717@sv14.smi.local:
+      1717@sv4.smi.local:1717@sv3.smi.local:1717@sge1.smi.local:1717@sv18.smi.local:
+      1717@sv1.smi.local:1717@sv19.smi.local
+  cadnrc:
+    bin    : &cadnrcBin <%=cadnrc[:bin]%>
+    license: '5280@sv3.smi.local'
 
+# List of Verilog compilers
 Verilog:
 - verilator
 - questa
 
-
-%#
-%# LM_LICENSE_FILE=5280@sv3.smi.local /tools/cadence/RC/RC-13.11/bin/rc
-%#@@cadence_rtlcomp = {
-%#  :license => '5280@sv3.smi.local',
-%#  :version => '14.20',
-%#  :base    => '/tools/cadence/RC'
-%#}
-#@@cadence_rtlcomp[:home] = "#{@@cadence_rtlcomp[:base]}/RC-#{@@cadence_rtlcomp[:version]}"
-#@@cadence_rtlcomp[:bin] = "#{@@cadence_rtlcomp[:home]}/bin"
-#@@cadence_rtlcomp[:rc] = "#{@@cadence_rtlcomp[:home]}/rc"
+Synthesis:
+- cadnrc
 

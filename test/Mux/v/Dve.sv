@@ -24,7 +24,7 @@ module Dve();
         .in(in), .out(out), .select(select), .clk(clk), .reset(reset)
     );
     Mux #(.WIDTH(WIDTH), .SIZE(SIZE))
-        mux(.in(in), .out(out), .select(select));
+        mux(.in(in), .out(out), .sel(select));
 
     initial
     begin

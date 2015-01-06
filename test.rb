@@ -27,6 +27,7 @@ class Tester
       dir_name = File.basename(test_dir)
       @log.info("Processing test directory: #{dir_name}")
       test_lang(test_dir, dir_name)
+      test_synthesis(test_dir)
     end
   end
 
@@ -47,6 +48,19 @@ private
 
   end
 
+  def test_synthesis(test_dir)
+
+    if not @config.has_key?('Synthesis') or @config['Synthesis'].empty?
+      @log.warn("No available synthesizers")
+    else
+      @config['Synthesis'].each do |tool_name|
+        work_dir = File.join('.', 'build', @name, 'synth', tool_name)
+        use_tool(tool_name, test_dir, work_dir)
+      end 
+    end
+
+  end
+
   def use_tool(tool_name, test_dir, work_dir)
     @log.info("Use #{tool_name}")
     require_relative tool_path(tool_name)
@@ -56,7 +70,8 @@ private
       @log.error("Build FAILED")
       return false
     end
-    tool.simulate
+    tool.run
+    @log.info("\n\n*** DONE WITH #{tool_name} ***\n")
   end
 
   def tool_path(name)

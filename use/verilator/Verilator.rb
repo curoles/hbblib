@@ -44,7 +44,9 @@ class Verilator
     true
   end
 
-  def simulate
+  # Run simulation
+  #
+  def run
     obj_dir = File.join(@work_dir, 'obj_dir')
     @log.info("Execute #{obj_dir}/VDve")
     system("./VDve", {:chdir=>obj_dir, [:out, :err]=>$stdout})
