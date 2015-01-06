@@ -12,6 +12,8 @@ module Dve();
     reg  [3-1:0] c;
     reg  [3-1:0] d;
     wire [3-1:0] out;
+    wire [3-1:0] out2;
+    wire [3-1:0] out3;
     reg  clk;
     reg  select;
     reg  [1:0] select2;
@@ -19,11 +21,11 @@ module Dve();
     //reg  reset;
     //
     wire [(3*8)-1:0] in;
-    assign in = {a,b,c,d,a,b,c,d};
+    assign in = {d,c,b,a,d,c,b,a};
 
-    Mux2 #(.WIDTH(3)) mux2(.a(a), .b(b), .out(out), .select(select));
-    Mux3 #(.WIDTH(3)) mux3(.a(a), .b(b), .c(c), .out(out), .select(select2));
-    Mux  #(.WIDTH(3), .SIZE(3)) mux8(.in(in), .out(out), .select(select3));
+    Mux2 #(.WIDTH(3)) mux2(.in0(a), .in1(b), .out(out2), .sel(select));
+    Mux3 #(.WIDTH(3)) mux3(.in0(a), .in1(b), .in2(c), .out(out3), .sel(select2));
+    Mux  #(.WIDTH(3), .SIZE(3)) mux8(.in(in), .out(out), .sel(select3));
 
     integer clock_count = 0;
 
@@ -53,7 +55,10 @@ module Dve();
             //assert (q != d);
             //enable <= 1;
         end else if (clock_count > 10) begin
-            assert (out == 3'b011);
+            assert (out == d) $display("Ok. out is d");
+            else $error("out=%h, sel=%h", out, select3);
+            assert(out2 == b);
+            assert(out3 == c);
             $display("Finish TB");
             $finish();
         end

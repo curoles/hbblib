@@ -1,4 +1,4 @@
-# Compiler Verilog code with Verilator and execute simulation.
+# Compile Verilog code with Verilator and execute simulation.
 #
 # @author     Igor Lesik 2014
 # @copyright  2014
@@ -13,7 +13,7 @@ class Verilator
 
   def initialize(log, test_dir, work_dir, config)
     @log, @test_dir, @work_dir, @config = log, test_dir, work_dir, config
-    @log.info("Verilator, test: #{test_dir}, work place: #{work_dir}")
+    @log.info("Verilator, test: #{test_dir}, work place: #{@work_dir}")
     FileUtils.mkdir_p(@work_dir)
   end
 
@@ -24,6 +24,11 @@ class Verilator
     test_bench_main = get_test_bench_main_exe(flist)
 
     vlog = @config['installed']['verilator']['vlog']
+
+    if vlog == nil or vlog == ''
+      @log.error('No Verilog compiler provided')
+      return false
+    end
 
     params = "--assert -Wall -cc #{src_files} --exe #{test_bench_main} "
     params << " --stats" # --coverage"

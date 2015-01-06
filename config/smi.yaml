@@ -1,34 +1,44 @@
-ruby:
-  path: /tools/local/ruby-2.1.0/bin/ruby
-  options: -W2
+%# SM CAD tools setup:
+%# >source /tools/eda_config/startup/dv.common.bashrc 
+%# >module load sha
+%# >module list
+
 
 % questa = {ver: '10.3', base: '/tools/mentor/questa'}
 % questa[:home] = "#{questa[:base]}/#{questa[:ver]}/questasim"
 % questa[:bin] = "#{questa[:home]}/linux_x86_64"
 
-questa:
-  version: &questaVer   <%=questa[:ver]%>
-  base   : &questaBase  <%=questa[:base]%>
-  home   : &questaHome  <%=questa[:home]%>
-  bin    : &questaBin   <%=questa[:bin]%>
-  vlog   : &questaVlog  <%=questa[:bin]%>/vlog
-  vsim   : &questaVsim  <%=questa[:bin]%>/vsim
-  vlib   : &questaVlib  <%=questa[:bin]%>/vlib
-  vopt   : &questaVopt  <%=questa[:bin]%>/vopt
-  license: '1717@sv1.smi.local:1717@sv3.smi.local:1717@sv4.smi.local:1717@login1.smi.local:1717@sge1.smi.local'
- 
-tool:
-  vlog: *questaVlog
-  vsim: *questaVsim
-  vlib: *questaVlib
-  vopt: *questaVopt
 
-# LM_LICENSE_FILE=5280@sv3.smi.local /tools/cadence/RC/RC-13.11/bin/rc
-#@@cadence_rtlcomp = {
-#  :license => '5280@sv3.smi.local',
-#  :version => '13.11',
-#  :base    => '/tools/cadence/RC'
-#}
+installed:
+  ruby:
+    path: /tools/local/ruby-2.1.0/bin/ruby
+  gcc:
+    path: /tools/local/gcc-4.9.2/bin/gcc
+  verilator:
+    vlog: /tools/local/verilator-3.864/bin/verilator
+  questa:
+    version: &questaVer   <%=questa[:ver]%>
+    base   : &questaBase  <%=questa[:base]%>
+    home   : &questaHome  <%=questa[:home]%>
+    bin    : &questaBin   <%=questa[:bin]%>
+    vlog   : &questaVlog  <%=questa[:bin]%>/vlog
+    vsim   : &questaVsim  <%=questa[:bin]%>/vsim
+    vlib   : &questaVlib  <%=questa[:bin]%>/vlib
+    vopt   : &questaVopt  <%=questa[:bin]%>/vopt
+    license: '1717@sv1.smi.local:1717@sv3.smi.local:1717@sv4.smi.local:1717@login1.smi.local:1717@sge1.smi.local'
+
+Verilog:
+- verilator
+- questa
+
+
+%#
+%# LM_LICENSE_FILE=5280@sv3.smi.local /tools/cadence/RC/RC-13.11/bin/rc
+%#@@cadence_rtlcomp = {
+%#  :license => '5280@sv3.smi.local',
+%#  :version => '14.20',
+%#  :base    => '/tools/cadence/RC'
+%#}
 #@@cadence_rtlcomp[:home] = "#{@@cadence_rtlcomp[:base]}/RC-#{@@cadence_rtlcomp[:version]}"
 #@@cadence_rtlcomp[:bin] = "#{@@cadence_rtlcomp[:home]}/bin"
 #@@cadence_rtlcomp[:rc] = "#{@@cadence_rtlcomp[:home]}/rc"
