@@ -1,4 +1,4 @@
-# Synthesise Verilog code with Cadence RTL Compiuler.
+# Synthesise Verilog code with Cadence RTL Compiler.
 #
 # @author     Igor Lesik 2015
 # @copyright  

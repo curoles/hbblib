@@ -122,10 +122,11 @@ private
         collect {|path| File.join(@test_dir,path)}.
           join(' ')
 
-    test_bench_sources =
+    test_bench_sources = flist['test_bench'] ?
       flist['test_bench'].
         collect {|path| File.join(@test_dir,path)}.
           join(' ')
+      : ''
 
     test_bench_sources + ' ' + dut_sources
   end

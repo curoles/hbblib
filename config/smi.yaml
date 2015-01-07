@@ -34,14 +34,29 @@ installed:
       1717@sv4.smi.local:1717@sv3.smi.local:1717@sge1.smi.local:1717@sv18.smi.local:
       1717@sv1.smi.local:1717@sv19.smi.local
   cadnrc:
+    home   : &cadnrcHome <%=cadnrc[:home]%>
     bin    : &cadnrcBin <%=cadnrc[:bin]%>
-    license: '5280@sv3.smi.local'
+    license: '5280@sv1.smi.local:5280@sv3.smi.local:'
+  ncverilog:
+    vlog   : /tools/cadence/INCISIV/tools/bin/ncverilog
+  smpdsyn:
+    license: '5280@sv1.smi.local:5280@sv3.smi.local:'
+    bin    : /tools/smi/cad/release/latest/bin/syn_flow/scripts/pd-runSyn
+    CAD    : /tools/smi/cad/release/latest
+    SMI_PROJECT: sha
+    SMI_TECH_DIR: '/tools/fab/tsmc16ffp_gl/1P12M_1X2Xa2Xy2Y2Yy1Z1R_pcell_v_1.0'
 
 # List of Verilog compilers
 Verilog:
 - verilator
 - questa
 
+# List of SystemVerilog compilers
+SystemVerilog:
+- verilator
+- questa
+
 Synthesis:
 - cadnrc
+- smpdsyn
 

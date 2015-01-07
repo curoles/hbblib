@@ -1,10 +1,10 @@
-ruby:
-  path: ruby
-  options: -W2
-
-verilator:
-  vlog   : &verilatorVlog  verilator
+installed:
+  ruby:
+    path: ruby
+  verilator:
+    vlog   : &verilatorVlog  verilator
  
-tool:
-  vlog: *verilatorVlog
+# List of Verilog compilers
+Verilog:
+- verilator
 
