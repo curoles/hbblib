@@ -37,5 +37,7 @@ Configure and run
    ruby ../hbblib/configure.rb
    ```
 
-
+References
+----------
+http://www.sunburst-design.com/papers/
 
