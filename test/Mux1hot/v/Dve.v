@@ -16,14 +16,12 @@ module Dve();
     //reg  select;
     //reg  [1:0] select2;
     reg  [2:0] select3;
+
     //reg  reset;
     //
     //wire [(3*8)-1:0] in;
     //assign in = {a,b,c,d,a,b,c,d};
 
-    //Mux2 #(.WIDTH(3)) mux2(.a(a), .b(b), .out(out), .select(select));
-    //Mux3 #(.WIDTH(3)) mux3(.a(a), .b(b), .c(c), .out(out), .select(select2));
-    //Mux  #(.WIDTH(3), .SIZE(3)) mux8(.in(in), .out(out), .select(select3));
     Mux1hot3 #(.WIDTH(3)) mux1h3(.in0(a), .in1(b), .in2(c), .sel(select3), .out(out));
 
     integer clock_count = 0;
@@ -37,19 +35,22 @@ module Dve();
         //d = 3'b011;
         //select = 1'b1;
         //select2 = 2'b10;
-        select3 = 3'b010;
+        select3 = 3'b001;
     end
 
     always @(posedge clk) begin
         if (clock_count == 1) begin
-            //d <= 1;
+            assert (out == a) $display ("OK. out == a");
+            else $error("out != a");
+            select3 <= 3'b010;
+        end else if (clock_count == 2) begin
+            assert (out == b);
+            select3 <= 3'b100;
         end else if (clock_count == 3) begin
-            assert (out == b) $display ("OK. out == b");
-            else $error("out != b");
-//        end else if (clock_count == 4) begin
-//            //enable <= 0;
-//        end else if (clock_count == 5) begin
-//            //d <= 0;
+            assert (out == c);
+            select3 <= 3'b111;
+        end else if (clock_count == 4) begin
+            $display("when bad sel, out=%h", out);
 //        end else if (clock_count == 6) begin
 //            //assert (q != d);
 //            //enable <= 1;

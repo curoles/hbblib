@@ -1,12 +1,12 @@
 # Default Test Bench
-#test_bench:
-#- Dve.sv
-#- Mux_checker.sv
-#- ../../../hwlib/SimClkGen/model/sv/SimClkGen.sv
-#- ../../../hwlib/SimResetGen/model/sv/SimRstGen.sv
+test_bench:
+- Dve.sv
+- Mux_checker.sv
+- ../../../hwlib/SimClkGen/model/sv/SimClkGen.sv
+- ../../../hwlib/SimResetGen/model/sv/SimRstGen.sv
 
 verilator_test_bench:
-- Dve.v
+- Dve.v --top-module Dve
 verilator_main: ../../../use/verilator/main.cpp
 
 dut:
