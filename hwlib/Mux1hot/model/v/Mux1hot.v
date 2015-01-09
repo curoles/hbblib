@@ -31,6 +31,8 @@ endmodule
 
 /* verilator lint_off DECLFILENAME */
 
+//`define MUX1HOT_MANUAL_UNROLL
+
 module Mux1hot3 #(parameter WIDTH=1)
 (
   input  [WIDTH-1:0]   in0,

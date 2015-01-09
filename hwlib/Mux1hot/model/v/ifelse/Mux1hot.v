@@ -5,6 +5,8 @@
  *
  */
 
+//`define MUX1HOT_TRUST_SELECT
+
 /* verilator lint_off DECLFILENAME */
 
 module Mux1hot3 #(parameter WIDTH=1)

@@ -5,6 +5,8 @@
  *
  */
 
+//`define MUX1HOT_TRUST_SELECT
+
 /* verilator lint_off DECLFILENAME */
 
 module Mux1hot3 #(parameter WIDTH=1)
@@ -33,6 +35,11 @@ module Mux1hot8 #(parameter WIDTH=1)
   input  [WIDTH-1:0]     in0,
   input  [WIDTH-1:0]     in1,
   input  [WIDTH-1:0]     in2,
+  input  [WIDTH-1:0]     in3,
+  input  [WIDTH-1:0]     in4,
+  input  [WIDTH-1:0]     in5,
+  input  [WIDTH-1:0]     in6,
+  input  [WIDTH-1:0]     in7,
   input  [8-1:0]         sel,
   output [WIDTH-1:0] out
 );
