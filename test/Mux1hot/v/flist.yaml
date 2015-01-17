@@ -10,7 +10,7 @@ verilator_test_bench:
 verilator_main: ../../../use/verilator/main.cpp
 
 dut:
-- ../../../hwlib/Mux1hot/model/v/Mux1hot.v
+- ../../../hwlib/Mux1hot/model/v/assign/Mux1hot.v
 
 synth:
 - Synth.v

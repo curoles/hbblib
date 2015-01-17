@@ -5,7 +5,7 @@
  *
  */
 
-//`define MUX1HOT_TRUST_SELECT
+`define MUX1HOT_TRUST_SELECT
 
 /* verilator lint_off DECLFILENAME */
 

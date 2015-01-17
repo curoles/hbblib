@@ -1,10 +1,11 @@
 set sdc_version 1.7
 set_units -capacitance 1000.0fF
-set_units -time 1000.0ps
+set_units -time 1.0ps
 #################################################################################
-#create_clock -name "clk" -add -period 1.0 -waveform {0.0 0.5} [get_ports clk]
-set_input_delay 0.1 -max -clock clk [all_inputs]
-set_output_delay 0.08 -max -clock clk [all_outputs]
+create_clock -name "clk" -add -period 1000.0 -waveform {0.0 0.5}
+#[get_ports clk]
+set_input_delay 0.0 -max -clock clk [all_inputs]
+set_output_delay 800.0 -max -clock clk [all_outputs]
 #set_max_fanout 16 [current_design]
 #set_max_transition 0.100 [current_design]
 #set_input_transition 0.05 [get_ports clk]
