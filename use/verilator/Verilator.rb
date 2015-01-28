@@ -20,6 +20,11 @@ class Verilator
   def build
     flist = YAML.load(File.open(File.join(@test_dir,'flist.yaml')))
 
+    unless flist.has_key?('dut') and flist.has_key?('verilator_test_bench')
+      @log.warn('No Verilog source files exist')
+      return false
+    end
+
     src_files = get_source_files(flist)
     test_bench_main = get_test_bench_main_exe(flist)
 

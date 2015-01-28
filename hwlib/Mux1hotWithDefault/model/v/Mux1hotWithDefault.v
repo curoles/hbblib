@@ -23,4 +23,22 @@ module Mux1hotWithDefault
 
 endmodule: Mux1hotWithDefault
 
+module Mux1hotWithDefault8 #(parameter WIDTH=1)
+(
+  input  [WIDTH-1:0]   in0,
+  input  [WIDTH-1:0]   in1,
+  input  [WIDTH-1:0]   in2,
+  input  [WIDTH-1:0]   in3,
+  input  [WIDTH-1:0]   in4,
+  input  [WIDTH-1:0]   in5,
+  input  [WIDTH-1:0]   in6,
+  input  [WIDTH-1:0]   in7,
+  input  [WIDTH-1:0]   dflt,
+  input  [8-1:0]       sel,
+  output [WIDTH-1:0]   out
+);
+
+  Mux1hotWithDefault #(.WIDTH(WIDTH), .INPUTS(8))
+    mux1h8(.in({in7,in6,in5,in4,in3,in2,in1,in0}), .dflt(dflt), .sel(sel), .out(out));
+endmodule
 

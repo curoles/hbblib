@@ -68,7 +68,7 @@ private
 set DESIGN Synth
 set vars(rtl_dir)   #{@test_dir}
 set vars(rtl_flist) #{File.absolute_path(synth_flist)}
-set vars(sdc_files) { #{sdc_files} }
+set vars(user_sdc_files) { #{sdc_files} }
 set vars(def_files) {}
 #set vars(rtl_overwrite)
 #set vars(keep_constant_flops) "true"
