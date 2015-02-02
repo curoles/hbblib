@@ -75,4 +75,22 @@ module Mux3 #(parameter WIDTH=1)
     mux3(.in0(in0),.in1(in1),.in2(in2),.in3({WIDTH{1'b0}}), .sel(sel), .out(out));
 endmodule
 
+module Mux8 #(parameter WIDTH=1)
+(
+  input  [WIDTH-1:0]   in0,
+  input  [WIDTH-1:0]   in1,
+  input  [WIDTH-1:0]   in2,
+  input  [WIDTH-1:0]   in3,
+  input  [WIDTH-1:0]   in4,
+  input  [WIDTH-1:0]   in5,
+  input  [WIDTH-1:0]   in6,
+  input  [WIDTH-1:0]   in7,
+  input  [3-1:0]       sel,
+  output [WIDTH-1:0]   out
+);
+
+  Mux #(.WIDTH(WIDTH), .SIZE(3))
+    mux8(.in({in7,in6,in5,in4,in3,in2,in1,in0}), .sel(sel), .out(out));
+endmodule
+
 /* verilator lint_on DECLFILENAME */

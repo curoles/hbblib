@@ -7,8 +7,14 @@ test_bench:
 
 # Verilator
 verilator_test_bench:
-- Dve.v
+- Dve.v --top-module Dve
 verilator_main: ../../../use/verilator/main.cpp
 
 dut:
-- ../../../hwlib/Mux/model/v/Mux.v
+- ../../../hwlib/Mux/model/v/assign/Mux.v
+
+synth:
+- Synth.v
+
+synth_sdc:
+- synth.sdc
