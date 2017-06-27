@@ -3,13 +3,16 @@
 BUILD_DIR:=$(BUILD_HOME)/Dff/verilator
 
 .PHONY: build
-build: SRCs:=$(SOURCE_PATH)/src/Dff/Dff.v
+build: SRCs:=$(ABS_SOURCE_PATH)/test/Dff/verilator/Dve.v $(ABS_SOURCE_PATH)/src/Dff/Dff.v
+build: TB_MAIN:=$(ABS_SOURCE_PATH)/test/Dff/verilator/main.cpp
+build: VLOG_OPTS:=--assert -Wall -cc --exe --stats $(SRCs) $(TB_MAIN)
+
 build: $(BUILD_DIR)
 	@echo "Test Dff with Verilator"
 	@echo "Verilator: $(VERILATOR)"
-	#$(IVERILOG) -g2005-sv -o $(BUILD_DIR)/dve $(SRCs)
-	#cd $(BUILD_DIR) && $(ICARUS_VVP) dve
+	cd $(BUILD_DIR) && $(VERILATOR) $(VLOG_OPTS)
+	cd $(BUILD_DIR)/obj_dir && make -f VDve.mk VDve
+	cd $(BUILD_DIR) && ./obj_dir/VDve
 
 $(BUILD_DIR):
-	#@echo "Test directory: $@"
 	mkdir -p $@
