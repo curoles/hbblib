@@ -7,7 +7,7 @@ test: SRCs:=$(SOURCE_PATH)/src/Dff/Dff.v $(SOURCE_PATH)/test/Dff/icarus/Dve.v
 test: $(BUILD_DIR)
 	@echo "Test Dff with Icarus"
 	@echo "iverilog: $(IVERILOG)"
-	$(IVERILOG) -g2012 -gassertions -o $(BUILD_DIR)/dve $(SRCs)
+	$(IVERILOG) -g2012 -o $(BUILD_DIR)/dve $(SRCs)
 	cd $(BUILD_DIR) && $(ICARUS_VVP) dve
 
 $(BUILD_DIR):
