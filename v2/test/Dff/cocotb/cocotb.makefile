@@ -1,9 +1,9 @@
--include $(BUILD_HOME)/custom.config.makefile
-#PATH := /home/igor/tool/icarus/v10_0_20150105/bin:$(PATH)
-#export $(PATH)
+-include config.makefile
+-include custom.config.makefile
 
+COMPILE_ARGS=-g2012
 VERILOG_SOURCES=$(ABS_SOURCE_PATH)/src/Dff/Dff.v 
 TOPLEVEL=Dff
-MODULE=Dve
+MODULE=dve
 include $(COCOTB)/makefiles/Makefile.inc
 include $(COCOTB)/makefiles/Makefile.sim

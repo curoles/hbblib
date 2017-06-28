@@ -6,7 +6,12 @@ BUILD_DIR:=$(BUILD_HOME)/Dff/cocotb
 build: $(BUILD_DIR)
 	@echo "Test Dff with CocoTB"
 	@echo "CocoTB: $(COCOTB)"
-	cd $(BUILD_DIR) && make -f $(BUILD_HOME)/config.makefile -f $(ABS_SOURCE_PATH)/test/Dff/cocotb/cocotb.makefile
+	#make -C $(BUILD_DIR) -f $(BUILD_HOME)/config.makefile -f $(ABS_SOURCE_PATH)/test/Dff/cocotb/cocotb.makefile
+	cp $(BUILD_HOME)/config.makefile $(BUILD_DIR)/.
+	cp $(BUILD_HOME)/custom.config.makefile $(BUILD_DIR)/.
+	cp $(ABS_SOURCE_PATH)/test/Dff/cocotb/cocotb.makefile $(BUILD_DIR)/Makefile
+	cp $(ABS_SOURCE_PATH)/test/Dff/cocotb/dve.py $(BUILD_DIR)/.
+	make -C $(BUILD_DIR)
 
 $(BUILD_DIR):
 	mkdir -p $@
